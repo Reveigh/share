@@ -1,4 +1,4 @@
-﻿$url = "https://github.com/Reveigh/share/raw/Client/ChromeStandaloneSetup64.exe"
+﻿$url = "https://github.com/Reveigh/share/raw/main/ChromeStandaloneSetup64.exe"
 $outputPath = "C:\ChromeStandaloneSetup64.exe"
 
 # Download the executable from the GitHub repository to C:\
