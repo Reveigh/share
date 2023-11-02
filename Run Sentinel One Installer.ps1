@@ -1,7 +1,7 @@
 # Define the URL of the executable file
 $url = 'https://github.com/Reveigh/share/raw/main/SentinelOneInstaller_windows_64bit_v23_2_3_358.exe'
 
-# Define the local path where the executable will be saved
+# Define the local path where you want to save the executable
 $outputPath = 'C:\SentinelOneInstaller.exe'
 
 # Prompt the user to enter the token code
@@ -14,20 +14,10 @@ Invoke-WebRequest -Uri $url -OutFile $outputPath
 if (Test-Path $outputPath) {
     Write-Host "Download completed. Starting the installation..."
 
-    # Create a background job to run the executable with arguments
-    $job = Start-Job -ScriptBlock {
-        param (
-            $outputPath,
-            $tokenCode
-        )
-        & $outputPath -t -q $tokenCode
-    } -ArgumentList $outputPath, $tokenCode
+    # Run the downloaded executable with arguments and token code
+    & $outputPath -t -q $tokenCode
 
-    # Wait for the job to complete
-    Wait-Job $job
-
-    # Remove the completed job
-    Remove-Job $job
+    Write-Host "Installation completed."
 } else {
     Write-Host "Download failed. The executable file was not saved."
 }
