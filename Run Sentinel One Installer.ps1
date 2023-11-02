@@ -17,7 +17,7 @@ if (Test-Path $outputPath) {
     # Run the downloaded executable with arguments and token code
     #& $outputPath -q -t $tokenCode
     
-    Start-Process -FilePath $outputPath -q -t $tokenCode
+    Start-Process -FilePath $outputPath -t $tokenCode -q
     
     Write-Host "Installation completed."
 } else {
