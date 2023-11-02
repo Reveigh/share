@@ -18,15 +18,6 @@ if (Test-Path $outputPath) {
     Write-Host "Download completed. Running the executable..."
 
     # Execute the downloaded executable with the arguments and token code
-    Start-Job -ScriptBlock {
-    Start-Process -FilePath $outputPath -ArgumentList $arguments, $tokenCode
-    } | Out-Null
-    
-    # Wait for the process to complete (installation)
-    $process = Get-Process -Name SentinelOneInstaller
-    $process.WaitForExit()
+     Start-Job -ScriptBlock { Start-Process -NoNewWindow -FilePath $outputPath -ArgumentList $arguments, $tokenCode }
 
-    Write-Host "Installation completed."
-} else {
-    Write-Host "Download failed. The executable file was not saved."
-}
+    # Start-Process -FilePath $outputPath -ArgumentList $arguments, $tokenCode
