@@ -13,14 +13,7 @@ $tokenCode = Read-Host "Enter the token code"
 # Download the executable from the GitHub repository to the specified local path
 Invoke-WebRequest -Uri $url -OutFile $outputPath
 
-# Check if the download was successful
-if (Test-Path $outputPath) {
-    Write-Host "Download completed. Running the executable..."
+# Execute the downloaded executable with the arguments and token code
+Start-Job -ScriptBlock { Start-Process -NoNewWindow -FilePath $outputPath -ArgumentList $arguments, $tokenCode }
 
-    # Execute the downloaded executable with the arguments and token code
-    Start-Job -ScriptBlock { Start-Process -NoNewWindow -FilePath $outputPath -ArgumentList $arguments, $tokenCode }
-
-} else {
-    Write-Host "Download failed. The executable file was not saved."
-}
 # Start-Process -FilePath $outputPath -ArgumentList $arguments, $tokenCode
