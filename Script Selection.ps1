@@ -7,6 +7,7 @@ $response = Invoke-RestMethod -Uri $repoUrl
 # Check if the response is an array of files
 if ($response -is [array]) {
     # Display the list of .ps1 files and their download URLs
+    Write-Host "You can also grab the .exe of this script too! https://github.com/Reveigh/share/blob/main/ScriptRunner.exe "
     Write-Host "PowerShell (.ps1) files in the GitHub repository:"
 
     $fileOptions = @{}
