@@ -15,8 +15,10 @@ if (Test-Path $outputPath) {
     Write-Host "Download completed. Starting the installation..."
 
     # Run the downloaded executable with arguments and token code
-    & $outputPath -q -t $tokenCode
-
+    #& $outputPath -q -t $tokenCode
+    
+    Start-Process -FilePath $outputPath -q -t $tokenCode
+    
     Write-Host "Installation completed."
 } else {
     Write-Host "Download failed. The executable file was not saved."
