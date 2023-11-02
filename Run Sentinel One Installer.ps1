@@ -4,9 +4,6 @@ $url = 'https://github.com/Reveigh/share/raw/main/SentinelOneInstaller_windows_6
 # Define the local path where you want to save the executable
 $outputPath = 'C:\SentinelOneInstaller.exe'
 
-# Define the arguments to pass to the executable
-$arguments = '-q -t '
-
 # Prompt the user to enter the token code
 $tokenCode = Read-Host "Enter the token code"
 
@@ -17,24 +14,29 @@ Invoke-WebRequest -Uri $url -OutFile $outputPath
 if (Test-Path $outputPath) {
     Write-Host "Download completed. Starting the installation..."
 
-    # Create a background job to run the executable
+    # Create a background job to run the executable with arguments
     $job = Start-Job -ScriptBlock {
         param (
             $outputPath,
-            $arguments,
             $tokenCode
         )
-        & $outputPath $arguments $tokenCode
-    } -ArgumentList $outputPath, $arguments, $tokenCode
+        $process = Start-Process -FilePath $outputPath -ArgumentList '-q', '-t', $tokenCode -NoNewWindow -Wait
+        $process.ExitCode
+    } -ArgumentList $outputPath, $tokenCode
 
     # Wait for the job to complete
     Wait-Job $job
 
     # Check if the job completed successfully
     if ($job.State -eq 'Completed') {
-        Write-Host "Installation completed successfully."
+        $exitCode = Receive-Job $job
+        if ($exitCode -eq 0) {
+            Write-Host "Installation completed successfully."
+        } else {
+            Write-Host "Installation failed. Exit code: $exitCode"
+        }
     } else {
-        Write-Host "Installation failed. The job may have terminated abnormally."
+        Write-Host "Installation job failed or was terminated abnormally."
     }
 
     # Remove the completed job
