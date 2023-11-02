@@ -25,6 +25,6 @@ if (-not (Test-Path $outputPath)) {
 $tokenCode = Read-Host "Enter the token code"
 
 # Run the downloaded executable with arguments and token code
-Start-Process -FilePath $outputPath -ArgumentList "-q", "-t", $tokenCode
+Start-Process -FilePath $outputPath -ArgumentList "/q", "/t", $tokenCode
 
 Write-Host "Installation completed."
