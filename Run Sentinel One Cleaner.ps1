@@ -6,7 +6,7 @@ $outputPath = 'C:\SentinelOneInstaller.exe'
 
 # Define the arguments to pass to the executable
 $arguments = '-c -q -t '
-    Write-Host "Use only if re-installing failed"`
+    Write-Host "Use only if re-installing failed"
 # Prompt the user to enter the token code
 $tokenCode = Read-Host "Enter the token code"
 
