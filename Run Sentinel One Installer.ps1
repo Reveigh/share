@@ -20,7 +20,7 @@ if (Test-Path $outputPath) {
             $outputPath,
             $tokenCode
         )
-        $process = Start-Process -FilePath $outputPath -ArgumentList '-q', '-t', $tokenCode -NoNewWindow -Wait
+        $process = Start-Process -FilePath $outputPath -ArgumentList '-q ', '-t ', $tokenCode
         $process.ExitCode
     } -ArgumentList $outputPath, $tokenCode
 
