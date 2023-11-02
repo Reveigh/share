@@ -18,6 +18,9 @@ if (Test-Path $outputPath) {
     Write-Host "Download completed. Running the executable..."
 
     # Execute the downloaded executable with the arguments and token code
-     Start-Job -ScriptBlock { Start-Process -NoNewWindow -FilePath $outputPath -ArgumentList $arguments, $tokenCode }
+    Start-Job -ScriptBlock { Start-Process -NoNewWindow -FilePath $outputPath -ArgumentList $arguments, $tokenCode }
 
-    # Start-Process -FilePath $outputPath -ArgumentList $arguments, $tokenCode
+} else {
+    Write-Host "Download failed. The executable file was not saved."
+}
+# Start-Process -FilePath $outputPath -ArgumentList $arguments, $tokenCode
