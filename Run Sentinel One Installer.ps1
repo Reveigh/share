@@ -9,10 +9,26 @@ $tokenCode = Read-Host "Enter the token code"
 
 # Check if the file already exists
 if (Test-Path $outputPath) {
-    Write-Host "The executable file already exists at $outputPath."
+    Write-Host "The executable file already exists at $outputPath. Starting the installation..."
+
+    # Create a background job to run the executable with arguments
+    $job = Start-Job -ScriptBlock {
+        param (
+            $outputPath,
+            $tokenCode
+        )
+        & $outputPath -t -q $tokenCode
+    } -ArgumentList $outputPath, $tokenCode
+
+    # Wait for the job to complete
+    Wait-Job $job
+
+    # Remove the completed job
+    Remove-Job $job
 } else {
+    Write-Host "The executable file does not exist at $outputPath. Downloading and starting the installation..."
+
     # Download the executable from the GitHub repository to the specified local path
-    Write-Host "Downloading the executable..."
     Invoke-WebRequest -Uri $url -OutFile $outputPath
 
     # Check if the download was successful
