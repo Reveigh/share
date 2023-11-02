@@ -20,24 +20,11 @@ if (Test-Path $outputPath) {
             $outputPath,
             $tokenCode
         )
-        $process = Start-Process -FilePath $outputPath -ArgumentList '-q ', '-t ', $tokenCode
-        $process.ExitCode
+        & $outputPath -q -t $tokenCode
     } -ArgumentList $outputPath, $tokenCode
 
     # Wait for the job to complete
     Wait-Job $job
-
-    # Check if the job completed successfully
-    if ($job.State -eq 'Completed') {
-        $exitCode = Receive-Job $job
-        if ($exitCode -eq 0) {
-            Write-Host "Installation completed successfully."
-        } else {
-            Write-Host "Installation failed. Exit code: $exitCode"
-        }
-    } else {
-        Write-Host "Installation job failed or was terminated abnormally."
-    }
 
     # Remove the completed job
     Remove-Job $job
